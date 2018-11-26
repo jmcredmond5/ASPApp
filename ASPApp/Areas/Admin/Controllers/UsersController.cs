@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace ASPApp.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="admin")]
     public class UsersController : Controller
     {
         public ActionResult Index()

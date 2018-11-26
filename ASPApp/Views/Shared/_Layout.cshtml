@@ -23,10 +23,25 @@
                 </button>
                 @Html.RouteLink("App Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            @*<div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <a href="@Url.RouteUrl("login")">Login</a>
+                    
                 </ul>
+            </div>*@
+            <div class="navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <p>Welcome back, @User.Identity.Name  </p>
+                    <a href="@Url.RouteUrl("logout")">Logout</a>
+                    if (User.IsInRole("admin"))
+                    {
+                        <a href="@Url.Action("index","Posts", new {area ="admin"})"> View posts in admin</a>
+                    }
+                        }
+                        else
+                        {
+                    <a href="@Url.RouteUrl("login")">Login</a>
+                }
             </div>
         </div>
     </div>
