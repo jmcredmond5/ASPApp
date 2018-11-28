@@ -1,4 +1,6 @@
-﻿using ASPApp.Infrastructure;
+﻿using ASPApp.Areas.Admin.ViewModels;
+using ASPApp.Infrastructure;
+using ASPApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,10 @@ namespace ASPApp.Areas.Admin.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(new UsersIndex
+            {
+                Users = Database.Session.Query<User>().ToList()
+            });
         }
     }
 }
