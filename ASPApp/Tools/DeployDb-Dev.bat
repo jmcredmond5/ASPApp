@@ -1,0 +1,1 @@
+..\..\packages\FluentMigrator.Console.3.1.3\net461\any\Migrate.exe --db=mysql --target=..\bin\aspapp.dll --configPath=..\Web.config -c=MainDb
