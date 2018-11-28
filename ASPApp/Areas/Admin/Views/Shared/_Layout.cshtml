@@ -1,0 +1,92 @@
+﻿@using System.Web.Optimization
+@{
+    Layout = null;
+}
+
+@helper SelectedTabClass(string tabName) { 
+    if (tabName == ViewBag.SelectedTab)
+    {
+            @: active
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Pages</title>
+    @Styles.Render("~/admin/styles")
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>*@
+                <ul class="nav nav-pills">
+                    <li>
+                        @Html.RouteLink("App Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </li>
+                    
+                    <li class="@SelectedTabClass("posts")">
+                        @Html.ActionLink("Posts", "Index", "Posts", new { area = "admin" }, new { }) 
+                    </li>
+                    
+                    <li class="@SelectedTabClass("users")">
+                        @Html.ActionLink("Users", "Index", "Users", new { area = "admin" }, new { }) 
+                    </li>
+                </ul>
+
+            </div>
+            @*<div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+
+                    </ul>
+                </div>*@
+            <div class="navbar-right">
+                <ul class="nav nav-pills">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <p>Welcome back, @User.Identity.Name  </p>
+                        </li>
+                        <li>
+                            <a href="@Url.RouteUrl("logout")">Logout</a>
+                        </li>
+                        if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a href="@Url.Action("index","Posts", new {area ="admin"})"> View posts in admin</a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.RouteUrl("login")">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/admin/scripts")
+    @RenderSection("Scripts", false)
+</body>
+</html>
